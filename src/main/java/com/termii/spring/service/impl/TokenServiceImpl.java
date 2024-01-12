@@ -3,9 +3,9 @@ package com.termii.spring.service.impl;
 import com.termii.spring.configuration.TermiiProperties;
 import com.termii.spring.dto.request.token.*;
 import com.termii.spring.dto.response.token.*;
-import com.termii.spring.mapper.token.request.SendTokenRequestMapper;
-import com.termii.spring.mapper.token.request.VoiceCallRequestMapper;
-import com.termii.spring.mapper.token.request.VoiceTokenRequestMapper;
+import com.termii.spring.mapper.token.request.*;
+import com.termii.spring.mapper.token.response.EmailTokenResponseMapper;
+import com.termii.spring.mapper.token.response.InAppTokenResponseMapper;
 import com.termii.spring.mapper.token.response.VoiceCallResponseMapper;
 import com.termii.spring.mapper.token.response.VoiceTokenResponseMapper;
 import com.termii.spring.service.BaseInitializer;
@@ -70,6 +70,63 @@ public class TokenServiceImpl extends BaseInitializer implements TokenService {
             HttpEntity<VoiceCallRequestDto> requestHttpEntity = new HttpEntity<>(requestDto, headers);
             VoiceCallResponseDto responseDto = getRestTemplate().postForObject(TokenUrlManager.VOICE_CALL_URL, requestHttpEntity, VoiceCallResponseDto.class);
             return VoiceCallResponseMapper.fromDto(Objects.requireNonNull(responseDto));
+
+        } catch (Exception exception) {
+            System.err.println("error calling termii API");
+            throw new RuntimeException(exception.getMessage());
+        }
+    }
+
+    @Override
+    public EmailTokenResponse emailToken(EmailTokenRequest emailTokenRequest) {
+
+        try {
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+            emailTokenRequest.setApiKey(termiiProperties.getApiKey());
+            emailTokenRequest.setEmailConfigurationId(termiiProperties.getEmailConfigurationId());
+            EmailTokenRequestDto requestDto = EmailTokenRequestMapper.toDto(emailTokenRequest);
+            HttpEntity<EmailTokenRequestDto> requestDtoHttpEntity = new HttpEntity<>(requestDto, headers);
+            EmailTokenResponseDto responseDto = getRestTemplate().postForObject(TokenUrlManager.EMAIL_TOKEN_URL, requestDtoHttpEntity, EmailTokenResponseDto.class);
+            return EmailTokenResponseMapper.fromDto(Objects.requireNonNull(responseDto));
+
+        } catch (Exception exception) {
+            System.err.println("error calling termii API");
+            throw new RuntimeException(exception.getMessage());
+        }
+    }
+
+    @Override
+    public VerifyTokenResponse verifyToken(VerifyTokenRequest verifyTokenRequest) {
+
+        try {
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+            verifyTokenRequest.setApiKey(termiiProperties.getApiKey());
+            VerityTokenRequestDto requestDto = VerifyTokenRequestMapper.toDto(verifyTokenRequest);
+            HttpEntity<VerityTokenRequestDto> requestDtoHttpEntity = new HttpEntity<>(requestDto, headers);
+            return getRestTemplate().postForObject(TokenUrlManager.VERIFY_TOKEN_URL, requestDtoHttpEntity, VerifyTokenResponse.class);
+
+        } catch (Exception exception) {
+            System.err.println("error calling termii API");
+            throw new RuntimeException(exception.getMessage());
+        }
+    }
+
+    @Override
+    public InAppTokenResponse inAppToken(InAppTokenRequest inAppTokenRequest) {
+
+        try {
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+            inAppTokenRequest.setApiKey(termiiProperties.getApiKey());
+            InAppTokenRequestDto requestDto = InAppTokenRequestMapper.toDto(inAppTokenRequest);
+            HttpEntity<InAppTokenRequestDto> requestDtoHttpEntity = new HttpEntity<>(requestDto, headers);
+            InAppTokenResponseDto responseDto = getRestTemplate().postForObject(TokenUrlManager.IN_APP_TOKEN_URL, requestDtoHttpEntity, InAppTokenResponseDto.class);
+            return InAppTokenResponseMapper.fromDto(Objects.requireNonNull(responseDto));
 
         } catch (Exception exception) {
             System.err.println("error calling termii API");

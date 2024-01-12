@@ -33,10 +33,6 @@ public class BaseInitializer {
             throw new IllegalStateException("Termii email config id required");
         }
 
-        if (!StringUtils.hasLength(termiiProperties.getApiSecret())) {
-            throw new IllegalStateException("Termii secret key required");
-        }
-
         restTemplate = restTemplateBuilder
                 .setConnectTimeout(Duration.ofSeconds(CONNECTION_TIME_OUT))
                 .setReadTimeout(Duration.ofSeconds(READ_TIME_OUT))

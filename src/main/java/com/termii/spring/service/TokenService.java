@@ -1,11 +1,7 @@
 package com.termii.spring.service;
 
-import com.termii.spring.dto.request.token.SendTokenRequest;
-import com.termii.spring.dto.request.token.VoiceCallRequest;
-import com.termii.spring.dto.request.token.VoiceTokenRequest;
-import com.termii.spring.dto.response.token.SendTokenResponse;
-import com.termii.spring.dto.response.token.VoiceCallResponse;
-import com.termii.spring.dto.response.token.VoiceTokenResponse;
+import com.termii.spring.dto.request.token.*;
+import com.termii.spring.dto.response.token.*;
 
 public interface TokenService {
 
@@ -14,4 +10,10 @@ public interface TokenService {
     VoiceTokenResponse voiceToken(VoiceTokenRequest voiceTokenRequest);
 
     VoiceCallResponse voiceCall(VoiceCallRequest voiceCallRequest);
+
+    EmailTokenResponse emailToken(EmailTokenRequest emailTokenRequest);
+
+    VerifyTokenResponse verifyToken(VerifyTokenRequest verifyTokenRequest);
+
+    InAppTokenResponse inAppToken(InAppTokenRequest inAppTokenRequest);
 }
