@@ -11,7 +11,8 @@ calls. It is specifically tailored for Maven projects and is compatible with Spr
 following command in the command line to install the SDK in the `.m2` maven repository on your localhost `./mvnw clean install`.
 <br>
 <br>
-2. Add the Termii dependency to your Spring boot project's `pom.xml` file.
+2. Add the Termii dependency to your Spring boot project's `pom.xml` file:
+
 ```xml
 <dependency>
     <groupId>com.termii</groupId>
